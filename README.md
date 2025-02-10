@@ -38,14 +38,34 @@ The Davidson Class Explorer streamlines this process by helping you discover you
 
 ## React Js Frontend
 
+**1.usePostFetch.jsx** - Creating a React Custom Hook to Interact to handle Put Requests to Flask Server and handle State updates 
+
+**2.useFormInput.jsx** - Custom Hook for Text Inputs
+
+**3.Homepage.jsx** 
+
+  - Responsive Front End, allows users to enter 3 concepts/themes
+  - Button thats calls /build endpoint to build the Ideal Fake Class
+  - Button to call /getclassess endpoint to fetch Davidson Classes similar to the Fake Class
+
+
+## Disclaimer 
+
+Davidson API Url is Not Public, so you will need to adapt this code to fit another Schools API schema, etc
 
 
 ## Dependencies
 
+Python Server
 ```bash
-requests beautifulsoup4 pinecone-client openai
+cd 'Flask Server'
+pip install -r requirements.txt
 ```
-
+React 
+```bash
+cd FrontEnd/class-Rag
+npm install
+```
 
 ## References
 - Davidson API (not public)
