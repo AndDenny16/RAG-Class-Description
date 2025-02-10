@@ -1,7 +1,6 @@
 from requests import request
 import os
 from dotenv import load_dotenv
-import json
 from pydanticDef import ClassEmbedding
 from bs4 import BeautifulSoup
 from openai import OpenAI
@@ -9,6 +8,8 @@ from pinecone import Pinecone
 
 
 load_dotenv()
+
+#Globals
 
 DAVIDSON_URL = os.getenv("DAVIDSON_API")
 OPEN_AI_API = os.getenv("OPEN_AI_API")
@@ -29,6 +30,7 @@ def get_embedding(class_description):
         response = client.embeddings.create(
             model="text-embedding-3-large",
             input= cleaned_description)
+    #If Failed just return None
     except Exception:
         print("Error Calling OpenAI")
         return None

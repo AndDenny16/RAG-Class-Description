@@ -2,7 +2,6 @@ from pinecone import Pinecone
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
-import json
 
 load_dotenv()
 
@@ -34,6 +33,7 @@ def get_variation(user_input):
 
 
 def embedding_request(request):
+    #Create Embedding of Request
     try: 
         response = client.embeddings.create(
             model="text-embedding-3-large",
@@ -68,6 +68,7 @@ def multiple_vector_search(embedding_list):
 
 
 def vector_search(embedding_value):
+    #Singular Vector Search
     try: 
         query_result = index.query(
                 namespace="Classes",
@@ -81,15 +82,26 @@ def vector_search(embedding_value):
     
     return query_result
     
-   
+#Takes in User Description of their Ideal Class and Returns 2 Davidson Classes
+#Main Function for Flask Server
 def simple_query(user_description):
-    embedding = embedding_request(user_description)
-    result = vector_search(embedding)
-    description_list = []
-    for indiv_match in result['matches']:
-        description_list.append(indiv_match['metadata'])
-    print(description_list)
-    return description_list
+    try: 
+        embedding = embedding_request(user_description)
+        print("Embedding Complete")
+        if not embedding:
+            raise Exception("Failed to Call OpenAI")
+        result = vector_search(embedding)
+        print("Vector Search Complete")
+        if not result: 
+            raise Exception("Failed To Query Pinecone")
+        description_list = []
+        for indiv_match in result['matches']:
+            description_list.append(indiv_match['metadata'])
+        print("Post Processing Complete")
+        return description_list
+    except Exception as e:
+        print(e)
+        return None
 
 
 
@@ -104,7 +116,6 @@ def query(topics, variations_amount):
         for _ in range(variations_amount): 
             completion = get_variation(user_input)
             variations.append(completion)
-        print("variations completed")
         #Create Embeddings of user request + variations
         embedding_values = []
         for i in range(len(variations)):
@@ -122,13 +133,6 @@ def query(topics, variations_amount):
         print("results completed")
         return description_list
 
-    except Exception: 
-        return {
-                'statusCode': 500,
-                'body': json.dumps({"error": "Issue Creating Request"})
-            }
-
-
-
-if __name__ == "__main__":
-    query(variations_amount=2)
+    except Exception as e:
+        print(e)
+        return None
