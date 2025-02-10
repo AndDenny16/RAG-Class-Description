@@ -44,9 +44,10 @@ The Davidson Class Explorer streamlines this process by helping you discover you
 
 **3.Homepage.jsx** 
 
-  - Responsive Front End, allows users to enter 3 concepts/themes
+  - Text Inputs for users to enter 3 concepts/themes
   - Button thats calls /build endpoint to build the Ideal Fake Class
   - Button to call /getclassess endpoint to fetch Davidson Classes similar to the Fake Class
+  - Responsive UI that displays loading and errors
 
 
 ## Disclaimer 
@@ -63,7 +64,7 @@ pip install -r requirements.txt
 ```
 React 
 ```bash
-cd FrontEnd/class-Rag
+cd Frontend/class-Rag
 npm install
 ```
 
