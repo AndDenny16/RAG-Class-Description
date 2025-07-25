@@ -8,7 +8,7 @@ class ClassEmbedding(BaseModel):
 
     @field_validator("values")
     def check_embedding_size(cls, v):
-        if len(v) != 3072:  # Change this to match your embedding model's dimension
+        if len(v) != 3072:  
             raise ValueError(f"Embedding must be exactly 768 dimensions, got {len(v)}")
         return v
 
